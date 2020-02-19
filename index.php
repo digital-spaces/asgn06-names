@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Document</title>
+  <title>Assignment 06</title>
+  <link rel="stylesheet" type="text/css" href="../css/skeleton.css">
 </head>
 <body>
   <?php
