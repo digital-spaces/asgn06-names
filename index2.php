@@ -8,9 +8,13 @@
 <body>
   <h3>Mmm, Data</h3>
   <?php
+    include("objects.php");
     include('functions.php');
     $dataFile = file_get_contents('names.txt');
-    name_function($dataFile);
+    $firstNames = new NameType;
+    $lastNames = new NameType;
+    $fullNames = new NameType;
+    name_function($dataFile, $firstNames, $lastNames, $fullNames);
   ?>
 </body>
 </html>
