@@ -34,7 +34,7 @@ function modify_names ($firstNames, $lastNames) {
   echo '</ol></p>';
 }
 
-function name_function ($dataFile, $firstNames, $lastNames, $fullNames) {
+function read_names ($dataFile, $firstNames, $lastNames, $fullNames) {
   // Setting all the variables we'll need. Mostly arrays and counters.
   $rows = explode("\n", $dataFile);
   $specialityUniqueNames = array();
@@ -49,39 +49,24 @@ function name_function ($dataFile, $firstNames, $lastNames, $fullNames) {
     $firstName = substr($rowData[1], 0, strpos($rowData[1], '--'));
     $fullName = $firstName.' '.$lastName;
 
-      // If the first or last name haven't been encountered before, add it to the specialty unique names array.
-      // This has to be done BEFORE counting the unique first and last names.
-      if (!isset($firstNames->associativeNames[$firstName]) and !isset($lastNames->associativeNames[$lastName])) {
-        $specialityUniqueNames[] = $fullName;
-      }
+    // If the first or last name haven't been encountered before, add it to the specialty unique names array.
+    // This has to be done BEFORE counting the unique first and last names.
+    if (!isset($firstNames->associativeNames[$firstName]) and !isset($lastNames->associativeNames[$lastName])) {
+      $specialityUniqueNames[] = $fullName;
+    }
 
-      // If the first name hasn't been encountered before, increase unique first names counter and add the name to the array.
-      // If the first name has been encountered before, increase its usage count.
-      $firstNames->setNames($firstName);
+    // If the first name hasn't been encountered before, increase unique first names counter and add the name to the array.
+    // If the first name has been encountered before, increase its usage count.
+    $firstNames->setNames($firstName);
 
-      // If the last name hasn't been encountered before, increase unique last names counter and add the name to the array.
-      // If the last name has been encountered before, increase its usage count.
-      $lastNames->setNames($lastName);
+    // If the last name hasn't been encountered before, increase unique last names counter and add the name to the array.
+    // If the last name has been encountered before, increase its usage count.
+    $lastNames->setNames($lastName);
 
-      // If the full name hasn't been encountered before, increase unique full names counter and add the name to the array.
-      // If the full name has been encountered before, increase its usage count.
-      $fullNames->setNames($fullName);
-    }    
+    // If the full name hasn't been encountered before, increase unique full names counter and add the name to the array.
+    // If the full name has been encountered before, increase its usage count.
+    $fullNames->setNames($fullName);
+    }
   }
-
-  // Echo the unique counts of first, last and full names.
-  echo '<p><b>The unique count of full names:</b> '.$fullNames->uniqueNames.'</p>';
-  echo '<p><b>The unique count of last names:</b> '.$lastNames->uniqueNames.'</p>';
-  echo '<p><b>The unique count of first names:</b> '.$firstNames->uniqueNames.'</p>';
-
-  // Echo the ten most common names, which we counted and sorted earlier.
-  list_names("The ten most common last names are", $lastNames->getMostCommonNames(), true);
-
-  list_names("The ten most common first names are", $firstNames->getMostCommonNames(), true);
-
-  // Echo the names, in the order they appear in the data, that are the first full name to use both the first and last name that makes it up.
-  list_names("A list of 25 speciality unique names:", $specialityUniqueNames, false);
-
-  // Echo some random names I made up from the unique first and last names that are otherwise not in the unique first names.
-  modify_names($firstNames, $lastNames);
+  return $specialityUniqueNames;
 }
